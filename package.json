@@ -4,13 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.1.0"
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShadFred/MyFirstSite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ShadFred/MyFirstSite/issues"
+  },
+  "homepage": "https://github.com/ShadFred/MyFirstSite#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }

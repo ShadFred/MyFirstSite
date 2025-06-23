@@ -1,9 +1,17 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-//cd C:\Users\gvkas\OneDrive\Документы\MyFirstSite\ (Для быстрой проверки)
-app.get('/', (req, res) => {
-    res.send('<h1>Hello, Geeks!</h1><p>This is your simple Express server.</p>');
+app.use(express.json());
+let items = [
+  { id: 1, name: 'Item One' },
+  { id: 2, name: 'Item Two' }
+];
+//main
+app.get("/",function(req,res){
+  res.sendFile(__dirname + "/pages/main.html");
+});
+app.get('/items', (req, res) => {
+  res.json(items);
 });
 
 app.listen(PORT, () => {
