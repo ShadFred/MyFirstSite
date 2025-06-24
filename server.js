@@ -1,26 +1,37 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const { sequelize, Employer } = require('./models');
+
 const app = express();
-const port = 3000;
-app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
 
-app.get("/", function(req, res){
-  res.sendFile(__dirname+ '/pages/main.html');
-})
+app.get('/', (req, res) => {
+  res.send('Career Navigator API is running');
+});
 
-app.get("/employer", function(req, res){
-  res.sendFile(__dirname+ '/pages/employer.html');
-})
+app.get('/api/employers', async (req, res) => {
+  try {
+    const employers = await Employer.findAll();
+    res.json(employers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-app.get("/student", function(req, res){
-  res.sendFile(__dirname+ '/pages/student.html');
-})
+app.post('/api/employers', async (req, res) => {
+  try {
+    const employer = await Employer.create(req.body);
+    res.status(201).json(employer);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-app.get("/university", function(req, res){
-  res.sendFile(__dirname+ '/pages/university.html');
-})
-
-
-
-app.listen(port, () => {
-  console.log(`Сервер запущен на http://localhost:${port}`);
+const PORT = process.env.PORT || 3000;
+sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
+  });
 });
