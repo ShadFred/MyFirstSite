@@ -59,15 +59,15 @@ app.post('/submit'), (req, res) => {
   let email = req.body.email;// адрес почты
   if (number === 1) {   
     let specialties =req.body.specialties;//адрес спецальностей университета
-    [name] = new university(name, email, specialties);
+    name = new university(name, email, specialties);
   } 
   if (number === 2){
     let work = req.body.work;//адрес работ 
-    [name] = new employer(name, email, work);
+    name = new employer(name, email, work);
   }
   if (number === 3){
     let workOrUniversity = req.body.workOrUniversit;//адрес потребностей шкилы в образовании или работе
-    [name] = new student(name, email, workOrUniversity);
+    name = new student(name, email, workOrUniversity);
   }
   console.log(name)
 }
