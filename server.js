@@ -53,7 +53,8 @@ class student extends User { //шкила
   }
 }
 app.post('/submit'), (req, res) => {
-  let number = req.body.number;//адрес страницы
+  let elem = document.getElementById('num');
+  let number = elem.dataset.number;
   let name = req.body.name; //адрес имени 
   let email = req.body.email;// адрес почты
   if (number === 1) {   
