@@ -53,19 +53,19 @@ class student extends User { //шкила
   }
 }
 app.post('/submit'), (req, res) => {
-  let number = req.body.number;
-  let name = req.body.name; 
-  let email = req.body.email;
+  let number = req.body.number;//адрес страницы
+  let name = req.body.name; //адрес имени 
+  let email = req.body.email;// адрес почты
   if (number === 1) {   
-    let specialties =req.body.specialties;
+    let specialties =req.body.specialties;//адрес спецальностей университета
     let [name] = new university(name, email, specialties);
   } 
   if (number === 2){
-    let work = req.body.work;
+    let work = req.body.work;//адрес работ 
     let [name] = new employer(name, email, work);
   }
   if (number === 3){
-    let workOrUniversity = req.body.workOrUniversit;
-    let [name] = new employer(name, email, workOrUniversity);
+    let workOrUniversity = req.body.workOrUniversit;//адрес потребностей шкилы в образовании или работе
+    let [name] = new student(name, email, workOrUniversity);
   }
 }
