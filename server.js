@@ -1,37 +1,72 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const { sequelize, Employer } = require('./models');
-
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+const port = 3000;
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Career Navigator API is running');
+app.get("/", function(req, res){
+  res.sendFile(__dirname+ '/pages/main.html');
+})
+
+app.get("/employer", function(req, res){
+  res.sendFile(__dirname+ '/pages/employer.html');
+})
+
+app.get("/student", function(req, res){
+  res.sendFile(__dirname+ '/pages/student.html');
+})
+
+app.get("/university", function(req, res){
+  res.sendFile(__dirname+ '/pages/university.html');
+})
+
+
+
+app.listen(port, () => {
+  console.log(`Сервер запущен на http://localhost:${port}`);
 });
-
-app.get('/api/employers', async (req, res) => {
-  try {
-    const employers = await Employer.findAll();
-    res.json(employers);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+//Классы 
+class User {
+  
+  constructor(name, email){//родительский класс
+    this.name = name;
+    this.email = email;
   }
-});
-
-app.post('/api/employers', async (req, res) => {
-  try {
-    const employer = await Employer.create(req.body);
-    res.status(201).json(employer);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  setValuesFromString(valueString) {
+    this.multiValues = valueString.split(',').map(item => item.trim());
   }
-});
-
-const PORT = process.env.PORT || 3000;
-sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
-  });
-});
+  
+  
+}
+class university extends User { //Университет
+  constructor(specialties){
+    this.specialties = specialties;
+  }
+}
+class employer extends User { //работодатель
+  constructor(work){
+    this.work = work;
+  }
+}
+class student extends User { //шкила
+  constructor(workOrUniversity){
+    this.workOrUniversity= workOrUniversity;
+  }
+}
+app.post('/submit'), (req, res) => {
+  let elem = document.getElementById('num');
+  let number = elem.dataset.number;
+  let name = req.body.name; //адрес имени 
+  let email = req.body.email;// адрес почты
+  if (number === 1) {   
+    let specialties =req.body.specialties;//адрес спецальностей университета
+    let [name] = new university(name, email, specialties);
+  } 
+  if (number === 2){
+    let work = req.body.work;//адрес работ 
+    let [name] = new employer(name, email, work);
+  }
+  if (number === 3){
+    let workOrUniversity = req.body.workOrUniversit;//адрес потребностей шкилы в образовании или работе
+    let [name] = new student(name, email, workOrUniversity);
+  }
+}
