@@ -21,17 +21,6 @@ app.get("/university", function(req, res){
 
 
 
-
-app.get('/users', (req, res) => {
-  const users = [
-    { id: 1, name: 'Иван' },
-    { id: 2, name: 'Мария' },
-  ];
-  res.json(users);
-});
-
-
-
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`);
 });
