@@ -1,38 +1,37 @@
 const express = require('express');
-const cors = require('cors');
-const { sequelize, Employer } = require('./models');
-
 const app = express();
-const port = 3001;
-
-app.use(cors());
+const port = 3000;
 app.use(express.json());
 
+app.get("/", function(req, res){
+  res.sendFile(__dirname+ '/pages/main.html');
+})
 
-sequelize.authenticate()
-  .then(() => console.log('DB connected'))
-  .catch(err => console.error('DB connection error:', err));
+app.get("/employer", function(req, res){
+  res.sendFile(__dirname+ '/pages/employer.html');
+})
 
-sequelize.sync({ alter: true }) 
-  .then(() => console.log('Models synchronized'));
+app.get("/student", function(req, res){
+  res.sendFile(__dirname+ '/pages/student.html');
+})
+
+app.get("/university", function(req, res){
+  res.sendFile(__dirname+ '/pages/university.html');
+})
 
 
 
-app.get('/employers', async (req, res) => {
-  const employers = await Employer.findAll();
-  res.json(employers);
+
+app.get('/users', (req, res) => {
+  const users = [
+    { id: 1, name: 'Иван' },
+    { id: 2, name: 'Мария' },
+  ];
+  res.json(users);
 });
 
 
-app.post('/employers', async (req, res) => {
-  try {
-    const employer = await Employer.create(req.body);
-    res.status(201).json(employer);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
 
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Сервер запущен на http://localhost:${port}`);
 });
